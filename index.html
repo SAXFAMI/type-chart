@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>タイプ相性表</title>
+<style>
+html,body{
+    margin:0;
+    background:#111;
+    height:100%;
+}
+#toggle{
+    position:fixed;
+    top:10px;
+    left:10px;
+    z-index:1000;
+    padding:10px 15px;
+}
+#img{
+    width:100%;
+    display:block;
+}
+.hidden{
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<button id="toggle">閉じる</button>
+
+<img id="img" src="typechart.png">
+
+<script>
+const img=document.getElementById("img");
+const btn=document.getElementById("toggle");
+
+btn.onclick=()=>{
+    img.classList.toggle("hidden");
+    btn.textContent=img.classList.contains("hidden")?"開く":"閉じる";
+};
+</script>
+
+</body>
+</html>
