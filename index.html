@@ -4,42 +4,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>タイプ相性表</title>
+
 <style>
-html,body{
+body{
     margin:0;
     background:#111;
-    height:100%;
+    overflow:hidden;
 }
+
 #toggle{
     position:fixed;
     top:10px;
     left:10px;
-    z-index:1000;
+    z-index:9999;
     padding:10px 15px;
+    font-size:16px;
 }
+
 #img{
     width:100%;
+    height:auto;
     display:block;
 }
-.hidden{
-    display:none;
-}
 </style>
+
 </head>
 <body>
 
 <button id="toggle">閉じる</button>
 
-<img id="img" src="type.png">
+<img id="img" src="type.png" alt="タイプ相性表">
 
 <script>
-const img=document.getElementById("img");
-const btn=document.getElementById("toggle");
+const img = document.getElementById("img");
+const btn = document.getElementById("toggle");
 
-btn.onclick=()=>{
-    img.classList.toggle("hidden");
-    btn.textContent=img.classList.contains("hidden")?"開く":"閉じる";
-};
+btn.addEventListener("click", () => {
+    if (img.style.display === "none") {
+        img.style.display = "block";
+        btn.textContent = "閉じる";
+    } else {
+        img.style.display = "none";
+        btn.textContent = "開く";
+    }
+});
 </script>
 
 </body>
