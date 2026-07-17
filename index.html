@@ -37,10 +37,7 @@ body{
 #img{
     display:none;
     position:fixed;
-    top:80px;
-    left:50%;
-    transform:translateX(-50%);
-    width:140px;
+    width:70px;
     height:auto;
     border-radius:10px;
     box-shadow:0 4px 12px rgba(0,0,0,.5);
@@ -57,6 +54,7 @@ body{
 
 <img id="img" src="type.png" alt="タイプ相性表">
 
+
 <script>
 const btn = document.getElementById("toggle");
 const img = document.getElementById("img");
@@ -67,6 +65,14 @@ let startX = 0;
 let startY = 0;
 let startLeft = 0;
 let startTop = 0;
+
+function moveTypeImage(){
+    const rect = btn.getBoundingClientRect();
+
+    img.style.left = rect.left + "px";
+    img.style.top = (rect.bottom + 10) + "px";
+}
+
 
 btn.addEventListener("pointerdown", (e) => {
     dragging = true;
@@ -80,6 +86,7 @@ btn.addEventListener("pointerdown", (e) => {
     btn.setPointerCapture(e.pointerId);
 });
 
+
 btn.addEventListener("pointermove", (e) => {
     if (!dragging) return;
 
@@ -92,7 +99,13 @@ btn.addEventListener("pointermove", (e) => {
 
     btn.style.left = (startLeft + dx) + "px";
     btn.style.top = (startTop + dy) + "px";
+
+    // アイコン移動中も位置更新
+    if(img.style.display === "block"){
+        moveTypeImage();
+    }
 });
+
 
 btn.addEventListener("pointerup", () => {
     dragging = false;
@@ -100,11 +113,13 @@ btn.addEventListener("pointerup", () => {
     if (!moved) {
         if (img.style.display === "none") {
             img.style.display = "block";
+            moveTypeImage();
         } else {
             img.style.display = "none";
         }
     }
 });
+
 </script>
 
 </body>
