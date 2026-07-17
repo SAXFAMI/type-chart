@@ -13,7 +13,7 @@ body{
     touch-action:none;
 }
 
-/* ボタン */
+/* アイコン */
 #toggle{
     position:fixed;
     top:20px;
@@ -40,11 +40,10 @@ body{
     top:80px;
     left:50%;
     transform:translateX(-50%);
-    width:90%;
-    max-width:350px;
+    width:140px;
     height:auto;
-    border-radius:12px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,.5);
     z-index:9998;
 }
 </style>
@@ -64,28 +63,38 @@ const img = document.getElementById("img");
 
 let dragging = false;
 let moved = false;
-let offsetX = 0;
-let offsetY = 0;
+let startX = 0;
+let startY = 0;
+let startLeft = 0;
+let startTop = 0;
 
 btn.addEventListener("pointerdown", (e) => {
     dragging = true;
     moved = false;
-    offsetX = e.clientX - btn.offsetLeft;
-    offsetY = e.clientY - btn.offsetTop;
+
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = btn.offsetLeft;
+    startTop = btn.offsetTop;
+
+    btn.setPointerCapture(e.pointerId);
 });
 
-document.addEventListener("pointermove", (e) => {
+btn.addEventListener("pointermove", (e) => {
     if (!dragging) return;
 
-    moved = true;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
 
-    btn.style.left = (e.clientX - offsetX) + "px";
-    btn.style.top = (e.clientY - offsetY) + "px";
+    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        moved = true;
+    }
+
+    btn.style.left = (startLeft + dx) + "px";
+    btn.style.top = (startTop + dy) + "px";
 });
 
-document.addEventListener("pointerup", () => {
-    if (!dragging) return;
-
+btn.addEventListener("pointerup", () => {
     dragging = false;
 
     if (!moved) {
