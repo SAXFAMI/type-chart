@@ -9,19 +9,20 @@
 body{
     margin:0;
     background:#111;
+    overflow:hidden;
 }
 
 #toggle{
     position:fixed;
-    top:10px;
-    left:10px;
-    z-index:9999;
+    top:20px;
+    left:20px;
     width:48px;
     height:48px;
     border:none;
     background:transparent;
     padding:0;
-    cursor:pointer;
+    z-index:9999;
+    touch-action:none;
 }
 
 #toggle img{
@@ -34,11 +35,11 @@ body{
 #img{
     width:100%;
     height:auto;
-    display:block;
+    display:none; /* 最初は非表示 */
 }
 </style>
-
 </head>
+
 <body>
 
 <button id="toggle">
@@ -48,16 +49,39 @@ body{
 <img id="img" src="type.png" alt="タイプ相性表">
 
 <script>
-const img = document.getElementById("img");
 const btn = document.getElementById("toggle");
+const img = document.getElementById("img");
 
-btn.onclick = function () {
+// 開閉
+btn.addEventListener("click", () => {
     if (img.style.display === "none") {
         img.style.display = "block";
     } else {
         img.style.display = "none";
     }
-};
+});
+
+// ドラッグ移動
+let dragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+btn.addEventListener("pointerdown", (e) => {
+    dragging = true;
+    offsetX = e.clientX - btn.offsetLeft;
+    offsetY = e.clientY - btn.offsetTop;
+});
+
+document.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+
+    btn.style.left = (e.clientX - offsetX) + "px";
+    btn.style.top = (e.clientY - offsetY) + "px";
+});
+
+document.addEventListener("pointerup", () => {
+    dragging = false;
+});
 </script>
 
 </body>
