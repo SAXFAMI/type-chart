@@ -37,12 +37,13 @@ body{
 #img{
     display:none;
     position:fixed;
-    width:70px;
+    width:100px;
     height:auto;
     border-radius:10px;
     box-shadow:0 4px 12px rgba(0,0,0,.5);
     z-index:9998;
 }
+
 </style>
 </head>
 
@@ -56,6 +57,7 @@ body{
 
 
 <script>
+
 const btn = document.getElementById("toggle");
 const img = document.getElementById("img");
 
@@ -68,7 +70,7 @@ let startLeft = 0;
 let startTop = 0;
 
 
-/* type.pngをアイコン位置に合わせる */
+/* type.pngをアイコンの下に配置 */
 function moveTypeImage(){
 
     const rect = btn.getBoundingClientRect();
@@ -78,7 +80,9 @@ function moveTypeImage(){
 
     img.style.top =
         (rect.bottom + 10) + "px";
+
 }
+
 
 
 btn.addEventListener("pointerdown", (e)=>{
@@ -97,9 +101,11 @@ btn.addEventListener("pointerdown", (e)=>{
 });
 
 
+
 btn.addEventListener("pointermove", (e)=>{
 
     if(!dragging) return;
+
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
@@ -119,6 +125,7 @@ btn.addEventListener("pointermove", (e)=>{
     }
 
 });
+
 
 
 btn.addEventListener("pointerup", ()=>{
