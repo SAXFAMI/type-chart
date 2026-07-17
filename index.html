@@ -9,7 +9,6 @@
 body{
     margin:0;
     background:#111;
-    overflow:hidden;
 }
 
 #toggle{
@@ -17,8 +16,17 @@ body{
     top:10px;
     left:10px;
     z-index:9999;
-    padding:10px 15px;
-    font-size:16px;
+    border:none;
+    background:transparent;
+    padding:0;
+    cursor:pointer;
+}
+
+#toggle img{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    box-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 
 #img{
@@ -31,17 +39,21 @@ body{
 </head>
 <body>
 
-<button id="toggle">閉じる</button
+<button id="toggle">
+    <img src="button.png" alt="切替">
+</button>
+
+<img id="img" src="type.png" alt="タイプ相性表">
+
+<script>
 const img = document.getElementById("img");
 const btn = document.getElementById("toggle");
 
-btn.addEventListener("click", () => {
+btn.addEventListener("click", function () {
     if (img.style.display === "none") {
         img.style.display = "block";
-        btn.textContent = "閉じる";
     } else {
         img.style.display = "none";
-        btn.textContent = "開く";
     }
 });
 </script>
