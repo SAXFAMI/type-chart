@@ -70,15 +70,17 @@ let startLeft = 0;
 let startTop = 0;
 
 
-/* type.pngをアイコンの右側へ配置 */
+/* type.pngをアイコン右側・中央の高さに配置 */
 function moveTypeImage(){
 
     const rect = btn.getBoundingClientRect();
 
+    // 横：アイコンの右側
     img.style.left = (rect.right + 10) + "px";
 
+    // 縦：type.pngの一番上をアイコン中央に合わせる
     img.style.top =
-        (rect.top + rect.height / 2 - img.offsetHeight / 2) + "px";
+        (rect.top + rect.height / 2) + "px";
 
 }
 
@@ -102,7 +104,6 @@ btn.addEventListener("pointerdown", (e)=>{
 btn.addEventListener("pointermove", (e)=>{
 
     if(!dragging) return;
-
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
