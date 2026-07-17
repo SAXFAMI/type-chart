@@ -37,7 +37,7 @@ body{
 #img{
     display:none;
     position:fixed;
-    width:100px;
+    width:140px;
     height:auto;
     border-radius:10px;
     box-shadow:0 4px 12px rgba(0,0,0,.5);
@@ -70,19 +70,17 @@ let startLeft = 0;
 let startTop = 0;
 
 
-/* type.pngをアイコンの下に配置 */
+/* type.pngをアイコンの右側へ配置 */
 function moveTypeImage(){
 
     const rect = btn.getBoundingClientRect();
 
-    img.style.left =
-        (rect.left + rect.width / 2 - img.offsetWidth / 2) + "px";
+    img.style.left = (rect.right + 10) + "px";
 
     img.style.top =
-        (rect.bottom + 10) + "px";
+        (rect.top + rect.height / 2 - img.offsetHeight / 2) + "px";
 
 }
-
 
 
 btn.addEventListener("pointerdown", (e)=>{
@@ -99,7 +97,6 @@ btn.addEventListener("pointerdown", (e)=>{
     btn.setPointerCapture(e.pointerId);
 
 });
-
 
 
 btn.addEventListener("pointermove", (e)=>{
@@ -125,7 +122,6 @@ btn.addEventListener("pointermove", (e)=>{
     }
 
 });
-
 
 
 btn.addEventListener("pointerup", ()=>{
