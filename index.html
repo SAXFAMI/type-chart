@@ -1,34 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>タイプ相性表</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    overflow:hidden;
+    touch-action:none;
+}
+
+/* ボタン */
+#toggle{
+    position:fixed;
+    top:20px;
+    left:20px;
+    width:48px;
+    height:48px;
+    border:none;
+    background:transparent;
+    padding:0;
+    z-index:9999;
+}
+
+#toggle img{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    display:block;
+}
+
+/* 相性表 */
+#img{
+    display:none;
+    position:fixed;
+    top:80px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:350px;
+    height:auto;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    z-index:9998;
+}
+</style>
+</head>
+
+<body>
+
+<button id="toggle">
+    <img src="button.png" alt="ボタン">
+</button>
+
+<img id="img" src="type.png" alt="タイプ相性表">
+
 <script>
 const btn = document.getElementById("toggle");
 const img = document.getElementById("img");
 
-let startX, startY;
+let dragging = false;
 let moved = false;
+let offsetX = 0;
+let offsetY = 0;
 
 btn.addEventListener("pointerdown", (e) => {
-    startX = e.clientX;
-    startY = e.clientY;
+    dragging = true;
     moved = false;
+    offsetX = e.clientX - btn.offsetLeft;
+    offsetY = e.clientY - btn.offsetTop;
 });
 
-btn.addEventListener("pointermove", (e) => {
-    if (startX == null) return;
+document.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
 
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
+    moved = true;
 
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-        moved = true;
-
-        btn.style.left = (btn.offsetLeft + dx) + "px";
-        btn.style.top = (btn.offsetTop + dy) + "px";
-
-        startX = e.clientX;
-        startY = e.clientY;
-    }
+    btn.style.left = (e.clientX - offsetX) + "px";
+    btn.style.top = (e.clientY - offsetY) + "px";
 });
 
-btn.addEventListener("pointerup", () => {
+document.addEventListener("pointerup", () => {
+    if (!dragging) return;
+
+    dragging = false;
+
     if (!moved) {
         if (img.style.display === "none") {
             img.style.display = "block";
@@ -36,8 +95,8 @@ btn.addEventListener("pointerup", () => {
             img.style.display = "none";
         }
     }
-
-    startX = null;
-    startY = null;
 });
 </script>
+
+</body>
+</html>
