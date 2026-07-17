@@ -18,8 +18,8 @@ body{
     position:fixed;
     top:20px;
     left:20px;
-    width:48px;
-    height:48px;
+    width:64px;
+    height:64px;
     border:none;
     background:transparent;
     padding:0;
@@ -27,13 +27,13 @@ body{
 }
 
 #toggle img{
-    width:48px;
-    height:48px;
+    width:64px;
+    height:64px;
     border-radius:50%;
     display:block;
 }
 
-/* 相性表 */
+/* タイプ相性表 */
 #img{
     display:none;
     position:fixed;
@@ -61,63 +61,86 @@ const img = document.getElementById("img");
 
 let dragging = false;
 let moved = false;
+
 let startX = 0;
 let startY = 0;
 let startLeft = 0;
 let startTop = 0;
 
+
+/* type.pngをアイコン位置に合わせる */
 function moveTypeImage(){
+
     const rect = btn.getBoundingClientRect();
 
-    img.style.left = rect.left + "px";
-    img.style.top = (rect.bottom + 10) + "px";
+    img.style.left =
+        (rect.left + rect.width / 2 - img.offsetWidth / 2) + "px";
+
+    img.style.top =
+        (rect.bottom + 10) + "px";
 }
 
 
-btn.addEventListener("pointerdown", (e) => {
+btn.addEventListener("pointerdown", (e)=>{
+
     dragging = true;
     moved = false;
 
     startX = e.clientX;
     startY = e.clientY;
+
     startLeft = btn.offsetLeft;
     startTop = btn.offsetTop;
 
     btn.setPointerCapture(e.pointerId);
+
 });
 
 
-btn.addEventListener("pointermove", (e) => {
-    if (!dragging) return;
+btn.addEventListener("pointermove", (e)=>{
+
+    if(!dragging) return;
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+
+    if(Math.abs(dx)>5 || Math.abs(dy)>5){
         moved = true;
     }
+
 
     btn.style.left = (startLeft + dx) + "px";
     btn.style.top = (startTop + dy) + "px";
 
-    // アイコン移動中も位置更新
+
     if(img.style.display === "block"){
         moveTypeImage();
     }
+
 });
 
 
-btn.addEventListener("pointerup", () => {
+btn.addEventListener("pointerup", ()=>{
+
     dragging = false;
 
-    if (!moved) {
-        if (img.style.display === "none") {
+
+    if(!moved){
+
+        if(img.style.display === "none"){
+
             img.style.display = "block";
             moveTypeImage();
-        } else {
+
+        }else{
+
             img.style.display = "none";
+
         }
+
     }
+
 });
 
 </script>
